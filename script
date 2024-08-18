@@ -1,0 +1,49 @@
+local toggleKey = Enum.KeyCode.M
+
+local phrases = {
+    "kid",
+    "bad",
+    "ur so ez",
+    "dog",
+    "bad alone",
+    "get better",
+    "finally",
+    "womp womp",
+    "cry",
+    "ur so bad",
+    "congrats LOL",
+    "kid ur so bad",
+    "kid ur ezzzz",
+    "run 1s",
+    "good job son",
+    "just log kid",
+    "log",
+}
+
+local function showActivationMessage()
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(0.3, 0, 0.05, 0)
+    textLabel.Position = UDim2.new(0.7, 0, 0.95, 0)
+    textLabel.Text = "Script activated successfully!"
+    textLabel.TextColor3 = Color3.new(1, 1, 1)
+    textLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+    textLabel.BackgroundTransparency = 0.5
+    textLabel.Parent = screenGui
+
+    wait(3)
+    screenGui:Destroy()
+end
+
+showActivationMessage()
+
+local function onKeyPress(input, gameProcessed)
+    if input.KeyCode == toggleKey and not gameProcessed then
+        local randomPhrase = phrases[math.random(1, #phrases)]
+        game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(randomPhrase, "All")
+    end
+end
+
+game:GetService("UserInputService").InputBegan:Connect(onKeyPress)
